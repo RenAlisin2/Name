@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirella Milenka Zorrilla Ariste, ¿bailamos bajo la luna de San Valentín?</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            background-color: #ffe6e6;
+            padding: 50px;
+            animation: fadeIn 2s ease-in;
+            overflow: hidden;
+            transition: background 1.5s ease-in-out;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            animation: slideIn 1.5s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        button {
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .no {
+            background-color: #ccc;
+        }
+        .flower {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 4s linear forwards;
+        }
+        @keyframes fall {
+            from { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        .message {
+            font-size: 30px;
+            font-weight: bold;
+            color: red;
+            display: none;
+            margin-top: 20px;
+        }
+        .poem {
+            font-style: italic;
+            font-size: 22px;
+            color: black;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <h2>Mirella Milenka Zorrilla Ariste, en el vaivén del tiempo...</h2>
+        <p>Entre las sombras de los días difíciles y la luz de los momentos felices, 
+           mi corazón sigue danzando al compás de tu recuerdo. 
+           Si el destino nos ha puesto pruebas, es porque sabe que nuestra historia 
+           merece ser escrita con tinta indeleble. 
+           ¿Bailamos una vez más bajo la luna de San Valentín?</p>
+        <br>
+        <img id="imagenAmor" src="foto.jpg" class="mi-imagen" style="width:200px; height:auto; border-radius:10px;">
+        <br>
+        <button class="yes" onclick="restartPage()">Sí</button>
+        <button class="no" onclick="moveButton(this)">No</button>
+    </div>
+
+    <p id="loveMessage" class="message">GRACIAS POR SER EL AMOR DE MI VIDA ❤️</p>
+    <p id="poem" class="poem">"Te amo como se aman ciertas cosas oscuras,<br>
+        secretamente, entre la sombra y el alma."</p>
+
+    <script>
+        function moveButton(button) {
+            let x = Math.random() * window.innerWidth * 0.6;
+            let y = Math.random() * window.innerHeight * 0.6;
+            button.style.position = 'absolute';
+            button.style.left = x + 'px';
+            button.style.top = y + 'px';
+        }
+
+        function restartPage() {
+            localStorage.setItem('showLove', 'true');
+            location.reload();
+        }
+
+        function showLove() {
+            document.body.style.backgroundColor = '#ffcccc'; // Cambia el fondo
+
+            // Generar caída de flores
+            for (let i = 0; i < 30; i++) {
+                let flower = document.createElement('div');
+                flower.innerHTML = i % 2 === 0 ? '🌹' : '🌻'; // Alterna entre rosa y girasol
+                flower.classList.add('flower');
+                document.body.appendChild(flower);
+                flower.style.left = Math.random() * window.innerWidth + 'px';
+                flower.style.top = (Math.random() * window.innerHeight * 0.5) + 'px';
+                flower.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                setTimeout(() => flower.remove(), 4000);
+            }
+
+            // Mostrar mensaje final
+            setTimeout(() => {
+                document.getElementById('loveMessage').style.display = 'block';
+            }, 4000);
+
+            // Mostrar poema después del mensaje
+            setTimeout(() => {
+                document.getElementById('poem').style.display = 'block';
+            }, 6000);
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('showLove') === 'true') {
+                localStorage.removeItem('showLove');
+                setTimeout(showLove, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
+
